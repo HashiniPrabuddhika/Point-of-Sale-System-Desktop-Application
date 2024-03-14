@@ -1,0 +1,3 @@
+Point of Sale System desktop application crafted using WPF, MVVM, and SQLite. Our solution supports multiple login windows tailored for admins, cashiers, and inventory managers, ensuring efficient management. Admins have comprehensive control over users, products, and orders, enabling them to oversee operations effortlessly. 💼 Meanwhile, our system provides specialized access areas for cashiers and inventory staff, enhancing both security and usability. 🔒 #PointOfSale #WPF #MVVM #SQLite
+
+Thank you chanmini for bringing your unique skills and energy to the team. Our dedication and hard work made our application a success! 
