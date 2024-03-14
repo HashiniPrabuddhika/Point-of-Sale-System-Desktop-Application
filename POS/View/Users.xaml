@@ -1,0 +1,126 @@
+﻿<UserControl x:Class="POS.View.Users"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:vm="clr-namespace:POS.ViewModel"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="772"
+             Style="{StaticResource Page_Style}"
+             x:Name="_window">
+
+    <UserControl.DataContext>
+        <vm:UserVM />
+    </UserControl.DataContext>
+
+    <Grid Margin="15">
+
+        <Border  CornerRadius="0,20,20,0">
+
+
+            <Grid Margin="0 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="221*"/>
+                    <RowDefinition Height="284*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Style="{StaticResource Text_Style2}"  FontWeight="Bold" FontSize="22" Text="Manage Users" Height="30" Margin="10,0,0,0" Width="492"/>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="204*" />
+                        <ColumnDefinition Width="167*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel  Grid.Column="0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource Text_Style2}" Text="First Name: " FontSize="16" Padding="5" Margin="5"/>
+                            <TextBox Style="{StaticResource TextBoxStyle}" FontSize="16" Padding="5" Margin="5" Width="270" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource Text_Style2}" Text="Last Name: " FontSize="16" Padding="5" Margin="5"/>
+                            <TextBox Style="{StaticResource TextBoxStyle}" FontSize="16" Padding="5" Margin="5" Width="270" Text="{Binding LastName}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource Text_Style2}" Text="User Type:   " FontSize="16" Padding="5" Margin="5"/>
+                            <ComboBox Style="{StaticResource ComboBoxStyle}" FontSize="16" Padding="5" Margin="3 5" Width="270" IsReadOnly="True" Foreground="#303436" HorizontalContentAlignment="Left"  Text="{Binding UserType}">
+                                <ComboBoxItem>Admin</ComboBoxItem>
+                                <ComboBoxItem>Cashier</ComboBoxItem>
+                                <ComboBoxItem>Inventory</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource Text_Style2}" Text="Username:  " FontSize="16" Padding="5" Margin="5"/>
+                            <TextBox Style="{StaticResource TextBoxStyle}" FontSize="16" Padding="5" Margin="5" Width="270" Text="{Binding Username}"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{StaticResource Text_Style2}" Text="Password:   " FontSize="16" Padding="5" Margin="5"/>
+                            <TextBox Style="{StaticResource TextBoxStyle}" FontFamily="../Fonts/#password" FontSize="16" Padding="5" Margin="5" Width="270" Text="{Binding Password}"/>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <StackPanel Orientation="Horizontal" Margin="0 20 0 0 ">
+                            <Button Style="{StaticResource BtnStyle2}" Width="200" FontSize="16" Padding="5" Margin="70 5 5 5" Content="Insert" Command="{Binding InsertUserCommand}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource BtnStyle2}" Width="200" FontSize="16" Padding="5" Margin="70 5 5 5" Content="Update" Command="{Binding UpdateUserCommand}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource BtnStyle2}" Width="200" FontSize="16" Padding="5" Margin="70 5 5 5" Content="Clear" Command="{Binding ClearUserCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+
+                </Grid>
+                <DataGrid Grid.Row="2" ItemsSource="{Binding Users}" AutoGenerateColumns="False" Margin="5,5,5,5" Name="UserDG" IsReadOnly="True" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" Style="{DynamicResource DataGridStyle1}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                        <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                        <DataGridTextColumn Header="User Type" Binding="{Binding Type}"/>
+                        <DataGridTextColumn Header="Username" Binding="{Binding Username}"/>
+
+                        <DataGridTemplateColumn Header="Update">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button  Style="{StaticResource gridEditButton}" Command="{Binding DataContext.UpdateCommand, ElementName=_window}" CommandParameter="{Binding}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Icon:PackIconMaterial Kind="PencilOutline" VerticalAlignment="Center" Margin="0 1 8 0" Width="11" Height="11"/>
+                                            <TextBlock Text="Edit"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Delete">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource gridRemoveButton}" Command="{Binding DataContext.DeleteCommand, ElementName=_window}" CommandParameter="{Binding}" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <Icon:PackIconMaterial Kind="DeleteOutline" VerticalAlignment="Center" Margin="0 1 8 0" Width="11" Height="11"/>
+                                            <TextBlock Text="Delete"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+</UserControl>
